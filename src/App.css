@@ -1,5 +1,5 @@
 .App {
-  
+  align-items: center;
 }
 
 .nav{
@@ -40,6 +40,15 @@
   display: flex;
   align-items: center;
   padding: 2rem;
+}
+
+.content-box{
+  background-color: green;
+  height: 80vh;
+  width: 50vw;
+  margin-top: 6rem;
+  margin-left: 25vw;
+  
 }
 .App-logo {
   height: 40vmin;
