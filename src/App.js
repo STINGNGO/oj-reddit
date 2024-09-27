@@ -3,13 +3,15 @@ import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
 import './App.css';
 import Navbar from './features/header/topNav';
+import ContentBox from './features/content/contentBox';
 
 function App() {
   return (
     <div className="App">
       <Navbar/>
+      <ContentBox/>
       
-        <img src={logo} className="App-logo" alt="logo" />
+        
         <Counter />
         <p>
           Edit <code>src/App.js</code> and save to reload.
