@@ -63,7 +63,7 @@ export default function ContentBox() {
           {isValidImageUrl(post.url) && (
             <img
               src={post.url}
-              a
+              alt={post.title}
               className="post-image"
             />
           )}
