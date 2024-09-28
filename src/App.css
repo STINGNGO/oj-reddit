@@ -50,14 +50,61 @@
   margin-left: 10px; /* adjust the margin to your liking */
 }
 
-.content-box{
-  background-color: green;
-  height: 80vh;
-  width: 50vw;
-  margin-top: 6rem;
-  margin-left: 25vw;
-  
+.content-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background-color: #fff;
 }
+
+.loading {
+  background-color: #ccc;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  margin: 20px;
+}
+
+.post-title {
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  max-height: 50px;
+}
+
+.post-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  max-height: 50px;
+  text-align: center;
+}
+
+.post-image {
+  max-width: 40vw;
+  max-height: 50vh;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: 20px auto;
+}
+
+.post-score {
+  text-align: center;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
