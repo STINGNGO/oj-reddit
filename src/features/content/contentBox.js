@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPostsStart, fetchPostsSuccess, fetchPostsFailure } from '../../app/store';
 
 export default function ContentBox() {
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const { posts, loading, error } = useSelector((state) => state.posts);
 
   useEffect(() => {
-    // Fetch data from Reddit API
-    fetch('https://oauth.reddit.com/r/popular/.json')
-      .then((response) => {
+    const fetchData = async () => {
+      dispatch(fetchPostsStart());
+      try {
+        const response = await fetch('https://oauth.reddit.com/r/popular/.json');
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        return response.json();
-      })
-      .then((data) => {
+        const data = await response.json();
         const posts = data.data.children.map((post) => post.data);
-        setData(posts);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error.message);
-        setLoading(false);
-      });
-  }, []);
+        dispatch(fetchPostsSuccess(posts));
+      } catch (error) {
+        dispatch(fetchPostsFailure(error.message));
+      }
+    };
+
+    fetchData();
+  }, [dispatch]);
 
   const isValidImageUrl = (url) => {
     try {
@@ -36,16 +36,7 @@ export default function ContentBox() {
 
   if (loading) {
     return (
-      <div
-        className="content-box"
-        style={{
-          backgroundColor: '#ccc',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100px',
-        }}
-      >
+      <div className="content-box loading">
         <span>Loading...</span>
       </div>
     );
@@ -53,13 +44,7 @@ export default function ContentBox() {
 
   if (error) {
     return (
-      <div
-        style={{
-          color: 'red',
-          textAlign: 'center',
-          margin: '20px',
-        }}
-      >
+      <div className="content-box error">
         <p>Something went wrong: {error}</p>
       </div>
     );
@@ -67,65 +52,23 @@ export default function ContentBox() {
 
   return (
     <div>
-      {data.map((post, index) => (
-        <div
-          key={index}
-          className="content-box"
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: '20px',
-            marginBottom: '20px',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-            borderRadius: '10px',
-            
-          }}
-        >
-          <h2
-            style={{
-              textAlign: 'center',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-              maxWidth: '100%',
-              maxHeight: '50px',
-            }}
-          >
-            {post.title}
-          </h2>
+      {posts.map((post, index) => (
+        <div key={index} className="content-box">
+          <h2 className="post-title">{post.title}</h2>
 
           {post.selftext && (
-            <p
-              style={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-                maxWidth: '100%',
-                maxHeight: '50px',
-                textAlign: 'center',
-              }}
-            >
-              {post.selftext}
-            </p>
+            <p className="post-text">{post.selftext}</p>
           )}
 
           {isValidImageUrl(post.url) && (
             <img
               src={post.url}
               alt={`Image for ${post.title}`}
-              style={{
-                maxWidth: '40vw',
-                maxHeight: '50vh',
-                objectFit: 'cover',
-                borderRadius: '10px',
-                margin: '20px auto',
-              }}
+              className="post-image"
             />
           )}
 
-          <p style={{ textAlign: 'center' }}>Score: {post.score}</p>
+          <p className="post-score">Score: {post.score}</p>
         </div>
       ))}
     </div>
