@@ -41,6 +41,14 @@
   align-items: center;
   padding: 2rem;
 }
+.centered-element {
+  display: flex;
+  justify-content: center;
+}
+
+.search-element {
+  margin-left: 10px; /* adjust the margin to your liking */
+}
 
 .content-box{
   background-color: green;

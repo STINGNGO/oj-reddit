@@ -1,6 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+
 import './App.css';
 import Navbar from './features/header/topNav';
 import ContentBox from './features/content/contentBox';
@@ -10,7 +9,7 @@ function App() {
     <div className="App">
       <Navbar/>
       <ContentBox/> 
-      <Counter />
+      
         
     </div>
   );
